@@ -1,0 +1,23 @@
+<div class="container mt-5">
+  <h1 class="text-center mb-4">All Books</h1>
+
+  <div class="row">
+    <% @books.each do |book| %>
+      <div class="col-md-4 mb-4">
+        <div class="card">
+          <div class="card-body">
+            <!-- Add the following container for the image -->
+            <div class="book-image-container">
+              <%= image_tag book.book_images.first, class: 'card-img-top img-fluid' if book.book_images.attached? %>
+            </div>
+
+            <h5 class="card-title"><%= book.book_name %></h5>
+            <p class="card-text">Author: <%= book.author_name %></p>
+            <p class="card-text">Price: <%= number_to_currency(book.price) %></p>
+            <%= link_to 'View Details', book_path(book), class: 'btn btn-primary' %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
