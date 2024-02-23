@@ -14,6 +14,7 @@
  *= require_self
  */
 
+
 /* Add this CSS to set a fixed aspect ratio for the book images */
 .book-image-container {
     position: relative;

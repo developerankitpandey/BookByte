@@ -7,19 +7,22 @@ class User < ApplicationRecord
     enum role: { buyer: 0, seller: 1}
         
     has_many :books, dependent: :destroy
-
-    # after_initialize :set_default_role, if: :new_record?
-    # before_validation :set_default_role_before_validation, on: :create
+    has_one :cart, dependent: :destroy
 
     before_create :set_default_role
-
-    # private 
-
+    after_create :create_cart
+    
     def set_default_role 
       self.role = :buyer
     end 
   
     def become_seller!
       update(role: :seller)
+    end 
+
+    private 
+
+    def create_cart 
+     Cart.create(user: self)
     end 
 end

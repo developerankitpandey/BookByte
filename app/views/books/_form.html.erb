@@ -10,14 +10,14 @@
     </div>
   <% end %>
 
-  <div class="form-group">
+  <div class="field">
     <%= form.label :book_images %>
-    <%= form.file_field :book_images, multiple: true, class: 'form-control' %>
-  </div>
+    <%= form.file_field :book_images, multiple: true %>
+  </div> <br>
 
   <div class="form-group">
     <%= form.label :book_name %>
-    <%= form.text_field :bookname, class: 'form-control' %>
+    <%= form.text_field :book_name, class: 'form-control' %>
   </div>
 
   <div class="form-group">
@@ -28,6 +28,11 @@
   <div class="form-group">
     <%= form.label :price %>
     <%= form.number_field :price, class: 'form-control' %>
+  </div>
+
+  <div class="field">
+  <%= form.label :pdf_file %>
+  <%= form.file_field :pdf_file %>
   </div>
 
   <div class="form-group">

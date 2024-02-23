@@ -1,23 +1,74 @@
-<div class="container mt-5">
-  <h1 class="text-center mb-4">All Books</h1>
+<body style="background-color: #0D1B2A; color: #FFFFFF; font-family: 'Arial', sans-serif;">
 
-  <div class="row">
-    <% @books.each do |book| %>
-      <div class="col-md-4 mb-4">
-        <div class="card">
-          <div class="card-body">
-            <!-- Add the following container for the image -->
-            <div class="book-image-container">
-              <%= image_tag book.book_images.first, class: 'card-img-top img-fluid' if book.book_images.attached? %>
+  <div class="container mt-5" style="background-color: #0D1B2A; color: #FFFFFF; font-family: 'Arial', sans-serif;">
+
+    <h1 class="text-center mb-4">All Books</h1>
+
+    <div class="row">
+      <% @books.each do |book| %>
+        <div class="col-lg-4 col-md-6 mb-4">
+          <div class="card" style="background-color: #212121; border: none; color: #FFFFFF; height: 600px;">
+            <div class="card-body" style="height: 500px;"> <!-- Adjust the height as needed -->
+              <!-- Book image -->
+              <div class="book-image-container" style="height: 450px;">
+                <% if book.book_images.attached? %>
+                  <%= image_tag book.book_images.first, class: 'card-img-top img-fluid' %>
+                <% else %>
+                  <div class="no-image-placeholder">No Image Available</div>
+                <% end %>
+                <!-- Carousel for multiple images -->
+                <div class="carousel">
+                  <% book.book_images.each do |image| %>
+                    <%= image_tag(image, class: 'carousel-item') %>
+                  <% end %>
+                </div>
+              </div>
+
+              <!-- Book details -->
+              <h5 class="card-title" style="font-size: 1.5rem; font-weight: bold; margin-bottom: 10px;"><%= book.book_name %></h5>
+              <p class="card-text" style="font-size: 1rem; line-height: 1.5; margin-bottom: 10px;">Author: <%= book.author_name %></p>
+              <p class="card-text" style="font-size: 1rem; line-height: 1.5; margin-bottom: 10px;">Price: <%= number_to_currency(book.price) %></p>
+
+              <!-- Buttons -->
+              <div class="d-flex justify-content-between">
+                <%= form_with(url: add_to_cart_book_path(book), method: :post) do %>
+                  <%= submit_tag 'Add to Cart', class: 'btn btn-primary', style: 'font-size: 1rem;' %>
+                <% end %>
+                <%= link_to 'View Details', book_path(book), class: 'btn btn-primary', style: 'font-size: 1rem;' %>
+              </div>
             </div>
-
-            <h5 class="card-title"><%= book.book_name %></h5>
-            <p class="card-text">Author: <%= book.author_name %></p>
-            <p class="card-text">Price: <%= number_to_currency(book.price) %></p>
-            <%= link_to 'View Details', book_path(book), class: 'btn btn-primary' %>
           </div>
         </div>
-      </div>
-    <% end %>
+      <% end %>
+    </div>
+
   </div>
-</div>
+</body>
+
+
+
+
+
+
+
+
+<!-- Include jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- Include Slick carousel scripts -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+
+<script>
+  $(document).ready(function(){
+    $('.carousel').slick({
+      slidesToShow: 1,
+      slidesToScroll: 1,
+      autoplay: true,
+      autoplaySpeed: 3000, // Adjust the autoplay speed (in milliseconds)
+      speed: 1000, // Adjust the slide transition speed (in milliseconds)
+      dots: true,
+      pauseOnHover: true, // Pause autoplay on hover
+      waitForAnimate: false // Allow instant navigation between slides
+    });
+  });
+</script>

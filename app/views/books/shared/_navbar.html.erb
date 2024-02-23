@@ -2,17 +2,22 @@
   <a class="navbar-brand" href="/" style="color: #ffffff;">BookByte</a>
 
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon" style="background-color: #ffffff;"></span> <!-- Set your desired color for the hamburger icon -->
+    <span class="navbar-toggler-icon" style="background-color: #ffffff;"></span> <!-- Set the color of the hamburger icon -->
   </button>
 
   <div class="collapse navbar-collapse" id="navbarNav">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
         <%= link_to 'All Books', books_path, class: 'nav-link', style: 'color: #ffffff;' %>
-      </li>
+        </li>
       <!-- Add more navigation links as needed -->
     </ul>
-
+    
+    <%= form_tag(search_books_path, method: :get, class: "form-inline my-2 my-lg-0") do %>
+      <%= text_field_tag :query, params[:query], class: "form-control mr-sm-2", style: "width: 400px;", placeholder: "Search Books", aria: { label: "Search" } %>
+      <%= submit_tag "Search", class: "btn btn-outline-light my-2 my-sm-0" %>
+    <% end %>
+    
     <ul class="navbar-nav ml-auto">
       <%= render 'books/shared/navbar_buttons' %>
     </ul>
