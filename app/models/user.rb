@@ -8,7 +8,8 @@ class User < ApplicationRecord
         
     has_many :books, dependent: :destroy
     has_one :cart, dependent: :destroy
-
+    has_many :cart_items, dependent: :destroy
+    
     before_create :set_default_role
     after_create :create_cart
     

@@ -40,11 +40,17 @@ class BooksController < ApplicationController
       end 
     end 
 
-    def add_to_cart 
+    def add_to_cart
       @book = Book.find(params[:id])
-      current_user&.cart&.cart_items&.create(book: @book)
+      current_user.cart_items.create(book: @book)
       redirect_to root_path, notice: "Book added to cart successfully"
-    end 
+    end
+    
+    def remove_from_cart 
+      @cart_item = current_user.cart_items.find(params[:id])
+      @cart_item.destroy
+      redirect_to cart_path, notice: "Item removed from cart"
+    end
 
     def cart
       @cart_items = current_user&.cart&.cart_items&.includes(:book)

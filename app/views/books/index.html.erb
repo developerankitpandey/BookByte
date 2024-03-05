@@ -25,15 +25,14 @@
               </div>
 
               <!-- Book details -->
-              <h5 class="card-title" style="font-size: 1.5rem; font-weight: bold; margin-bottom: 10px;"><%= book.book_name %></h5>
+              <h6 class="card-title" style="font-size: 1.5rem; font-weight: bold; margin-bottom: 10px;"><%= book.book_name %></h6>
               <p class="card-text" style="font-size: 1rem; line-height: 1.5; margin-bottom: 10px;">Author: <%= book.author_name %></p>
               <p class="card-text" style="font-size: 1rem; line-height: 1.5; margin-bottom: 10px;">Price: <%= number_to_currency(book.price) %></p>
 
               <!-- Buttons -->
               <div class="d-flex justify-content-between">
-                <%= form_with(url: add_to_cart_book_path(book), method: :post) do %>
-                  <%= submit_tag 'Add to Cart', class: 'btn btn-primary', style: 'font-size: 1rem;' %>
-                <% end %>
+              <%= button_to "Add to Cart", add_to_cart_book_path(book), method: :post, class: 'btn btn-primary' %>
+
                 <%= link_to 'View Details', book_path(book), class: 'btn btn-primary', style: 'font-size: 1rem;' %>
               </div>
             </div>
