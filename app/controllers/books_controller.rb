@@ -49,11 +49,11 @@ class BooksController < ApplicationController
     def remove_from_cart 
       @cart_item = current_user.cart_items.find(params[:id])
       @cart_item.destroy
-      redirect_to cart_path, notice: "Item removed from cart"
+      redirect_to cart_books_path, notice: "Item removed from cart"
     end
 
     def cart
-      @cart_items = current_user&.cart&.cart_items&.includes(:book)
+      @cart_items = current_user.cart_items&.includes(:book)
     end
     
   

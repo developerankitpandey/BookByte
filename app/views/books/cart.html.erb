@@ -1,5 +1,38 @@
 <!-- app/views/books/cart.html.erb -->
-<h1>Cart</h1>
-<% @cart_items.each do |cart_item| %>
-  <p><%= cart_item.book.book_name %> - <%= number_to_currency(cart_item.book.price) %></p>
-<% end %>
+<body class="p-3 mb-2 bg-dark text-dark">
+  
+<div class="container">
+  <h1 class="mt-5 mb-4">Your Cart</h1>
+
+  <div class="row">
+    <% @cart_items.each do |cart_item| %>
+      <div class="col-md-6">
+        <div class="card mb-3">
+          <div class="row g-0">
+            <div class="col-md-4">
+              <% if cart_item.book.book_images.attached? %>
+                <%= image_tag cart_item&.book&.book_images.first, class: 'img-fluid rounded-start', alt: cart_item.book.book_name %>
+              <% else %>
+                <%= image_tag 'placeholder.png', class: 'img-fluid rounded-start', alt: 'Placeholder Image' %>
+              <% end %>
+            </div>
+            <div class="col-md-8">
+              <div class="card-body">
+                <h5 class="card-title"><%= cart_item.book.book_name %></h5>
+                <p class="card-text"><%= number_to_currency(cart_item.book.price) %></p>
+                <%= link_to 'Remove', remove_from_cart_book_path(cart_item), class: 'btn btn-danger', data: {
+                                turbo_method: :delete,
+                                turbo_confirm: "Are you sure?"
+                              } %>
+
+                <%= link_to 'View Details', book_path(cart_item.book), class: 'btn btn-primary ', style: 'font-size: 1rem;' %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+</body>

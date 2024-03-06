@@ -3,9 +3,10 @@ Rails.application.routes.draw do
   
   resources :books, only: [:index, :show, :new, :create, :destroy] do 
     post 'add_to_cart', on: :member
-    get '/cart', to: 'books#cart', as: 'cart'
-
+    delete 'remove_from_cart', on: :member
+    
     collection do
+      get '/cart', to: 'books#cart', as: 'cart'
       get 'search', to: 'books#search'
     end
 
