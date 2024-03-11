@@ -10,7 +10,7 @@
           <div class="card" style="background-color: #212121; border: none; color: #FFFFFF; height: 600px;">
             <div class="card-body" style="height: 500px;"> <!-- Adjust the height as needed -->
               <!-- Book image -->
-              <div class="book-image-container" style="height: 450px;">
+              <div class="book-image-container" style="height: 400px;">
                 <% if book.book_images.attached? %>
                   <%= image_tag book.book_images.first, class: 'card-img-top img-fluid' %>
                 <% else %>
@@ -25,7 +25,7 @@
               </div>
 
               <!-- Book details -->
-              <h6 class="card-title" style="font-size: 1.2rem; font-weight: bold; margin-bottom: 10px;"><%= book.book_name %></h6>
+              <h6 class="card-title mt-2" style="font-size: 1rem; font-weight: bold; margin-bottom: 10px;"><%= book.book_name %></h6>
               <p class="card-text" style="font-size: 1rem; line-height: 1.5; margin-bottom: 10px;">Author: <%= book.author_name %></p>
               <p class="card-text" style="font-size: 1rem; line-height: 1.5; margin-bottom: 10px;">Price: <%= number_to_currency(book.price) %></p>
 
@@ -42,6 +42,8 @@
     </div>
 
   </div>
+                    <%= will_paginate @books %>
+
 </body>
 
 
