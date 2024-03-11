@@ -3,12 +3,12 @@ class BooksController < ApplicationController
     before_action :check_seller_status, only: [:new, :create]
 
     def index 
-     @books = Book.all 
-    #  @selected_book_id = @books.first
-    end  
+      @books = Book.paginate(page: params[:page], per_page: 15)
+    end
 
     def search
-      @books = Book.where("LOWER(book_name) LIKE ? OR LOWER(author_name) LIKE ?", "%#{params[:query].downcase}%", "%#{params[:query].downcase}%")
+      @books = Book.where("LOWER(book_name) LIKE ? OR LOWER(author_name) LIKE ?", "%#{params[:query].downcase}%", "%#{params[:query].downcase}%").paginate(page: params[:page], per_page: 10)
+
       render :index
     end
 
@@ -42,9 +42,13 @@ class BooksController < ApplicationController
 
     def add_to_cart
       @book = Book.find(params[:id])
+      if current_user.cart_items.exists?(book_id: @book.id)
+        redirect_to root_path, alert: "You have already added this book to your cart"
+      else
       current_user.cart_items.create(book: @book)
       redirect_to root_path, notice: "Book added to cart successfully"
-    end
+      end
+    end 
     
     def remove_from_cart 
       @cart_item = current_user.cart_items.find(params[:id])
