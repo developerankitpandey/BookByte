@@ -3,7 +3,16 @@ class BooksController < ApplicationController
     before_action :check_seller_status, only: [:new, :create]
 
     def index 
-      @books = Book.paginate(page: params[:page], per_page: 15)
+      # @books = Book.paginate(page: params[:page], per_page: 15)
+      if params[:category].present? && Book.categories.include?(params[:category])
+        @books = Book.where(category: params[:category]).order(created_at: :desc).paginate(page: params[:page], per_page: 18)
+      else
+        @books = Book.order(created_at: :desc).paginate(page: params[:page], per_page: 18)
+      end
+    
+      if @books.empty?
+        flash.now[:notice] = "No books found for the selected category."
+      end
     end
 
     def search
@@ -64,7 +73,7 @@ class BooksController < ApplicationController
   private 
 
   def book_params 
-   params.require(:book).permit(:book_name, :author_name, :price, :pdf_file, book_images: [] )
+   params.require(:book).permit(:book_name, :author_name, :price, :category, :pdf_file, book_images: [] )
   end
   
   def check_seller_status 
