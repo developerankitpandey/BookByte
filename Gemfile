@@ -76,3 +76,5 @@ gem 'cancancan'
 gem 'carrierwave'
 gem 'mini_magick'
 gem 'will_paginate', '~> 4.0'
+gem 'omniauth-google-oauth2'
+gem "omniauth-rails_csrf_protection"

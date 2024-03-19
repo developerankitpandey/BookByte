@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  devise_for :users
+  # devise_for :users
   
   resources :books, only: [:index, :show, :new, :create, :destroy] do 
     post 'add_to_cart', on: :member
@@ -22,4 +22,8 @@ Rails.application.routes.draw do
     patch 'become_seller', on: :member
   end
   
+  devise_for :user,
+      controllers: {
+         omniauth_callbacks: 'users/omniauth_callbacks'
+      }
 end
