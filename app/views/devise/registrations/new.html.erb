@@ -26,6 +26,9 @@
       <div class="actions">
         <%= f.submit "Sign up", class: "btn btn-primary btn-block", style: "background-color: #008CBA; color: white;" %>
       </div>
+
+      <%= button_to 'Login with Google', user_google_oauth2_omniauth_authorize_path, method: :post, :data => {turbo: "false"} %>
+
     <% end %>
 
     <%= render "devise/shared/links" %>
