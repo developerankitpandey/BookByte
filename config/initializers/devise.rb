@@ -269,7 +269,7 @@ Devise.setup do |config|
   config.sign_out_via = :delete
 
   # ==> OmniAuth
-  config.omniauth :google_oauth2, '32819166194-islo0ccmok5alqmbbuj4lu9f3gjqglmd.apps.googleusercontent.com', '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'
+  config.omniauth :google_oauth2, '32819166194-vvifs6glrnj9lph2ceo9t0t6qhci9405.apps.googleusercontent.com', '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'
 
   # Add a new OmniAuth provider. Check the wiki for more information on setting
   # up on your models and hooks.
