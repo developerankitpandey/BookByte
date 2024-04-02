@@ -1,30 +1,17 @@
+<body style="background-color: #0D1B2A; color: #FFFFFF; font-family: 'Arial', sans-serif; ">
 <div class="container mt-5">
   <div class="row">
     <div class="col-md-6">
       <% if @book.book_images.attached? %>
-        <div id="book-images-carousel" class="carousel slide mb-4" data-bs-ride="carousel">
-          <div class="carousel-inner">
-            <% @book.book_images.each_with_index do |image, index| %>
-              <div class="carousel-item <%= 'active' if index.zero? %>">
-                <%= image_tag image, class: 'd-block w-100' %>
-              </div>
-            <% end %>
-          </div>
-          <button class="carousel-control-prev" type="button" data-bs-target="#book-images-carousel" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-          </button>
-          <button class="carousel-control-next" type="button" data-bs-target="#book-images-carousel" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-          </button>
-        </div>
+        <% @book.book_images.each_with_index do |image, index| %>
+          <%= image_tag image, class: 'd-block w-100 mb-4' %>
+        <% end %>
       <% else %>
         <div class="no-image-placeholder text-center mb-4">No Image Available</div>
       <% end %>
     </div>
     <div class="col-md-6">
-      <div class="card">
+      <div class="card bg-dark text-white">
         <div class="card-body">
           <h1 class="card-title mb-4"><%= @book.book_name %></h1>
           <h5 class="card-subtitle mb-3 text-muted">Author: <%= @book.author_name %></h5>
@@ -35,10 +22,12 @@
             </div>
           <% end %>
           <% if current_user == @book.user %> <!-- Check if current user is the owner of the book -->
-          <%= link_to 'Delete', book_path(@book), data: { turbo_method: :delete }, class: 'btn btn-danger' %>
-        <% end %>
+            <%= link_to 'Delete', book_path(@book), data: { turbo_method: :delete }, class: 'btn btn-danger mt-3' %>
+          <% end %>
         </div>
       </div>
     </div>
   </div>
 </div>
+
+</body>

@@ -1,10 +1,13 @@
+
+<%# _navbar_buttons.html.erb   %>
+
 <% if user_signed_in? %>
   <li class="nav-item">
     <%= link_to 'Add New Book', new_book_path, class: 'btn btn-success mr-2' %>
   </li>
   <li class="nav-item">
     <%= link_to 'Logout', destroy_user_session_path, data: { turbo_method: :delete }, class: 'btn btn-danger' %>
-  </li>
+  </li>&nbsp;
   <% if current_user.buyer? %>
     <li class="nav-item">
       <%= link_to 'Become Seller', become_seller_user_path(current_user), data: { turbo_method: :patch }, class: 'btn btn-primary' %>
