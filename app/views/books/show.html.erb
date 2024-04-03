@@ -19,6 +19,8 @@
           <% if @book.pdf_file.attached? %>
             <div class="text-center">
               <%= link_to 'Download PDF', url_for(@book.pdf_file), download: 'book.pdf', class: 'btn btn-primary' %>
+              <%= link_to 'buy', checkout_book_path, method: :get %>
+
             </div>
           <% end %>
           <% if current_user == @book.user %> <!-- Check if current user is the owner of the book -->

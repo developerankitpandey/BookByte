@@ -53,3 +53,14 @@
     background-color: #f5f5f5;
   }
   
+  /* Default width for desktop screens */
+#search-input {
+  width: 400px;
+}
+
+/* Media query to adjust width for smaller screens */
+@media (max-width: 768px) {
+  #search-input {
+    width: 200px;
+  }
+}

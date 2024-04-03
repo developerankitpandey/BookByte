@@ -1,23 +1,22 @@
 
 <%# _navbar_buttons.html.erb   %>
-
 <% if user_signed_in? %>
   <li class="nav-item">
-    <%= link_to 'Add New Book', new_book_path, class: 'btn btn-success mr-2' %>
+    <%= link_to 'Add New Book', new_book_path, class: 'btn btn-success mr-lg-2 mr-md-1 mr-sm-1', style: 'margin-bottom: 5px;' %>
   </li>
   <li class="nav-item">
-    <%= link_to 'Logout', destroy_user_session_path, data: { turbo_method: :delete }, class: 'btn btn-danger' %>
+    <%= link_to 'Logout', destroy_user_session_path, data: { turbo_method: :delete }, class: 'btn btn-danger', style: 'margin-bottom: 5px;' %>
   </li>&nbsp;
   <% if current_user.buyer? %>
     <li class="nav-item">
-      <%= link_to 'Become Seller', become_seller_user_path(current_user), data: { turbo_method: :patch }, class: 'btn btn-primary' %>
+      <%= link_to 'Become Seller', become_seller_user_path(current_user), data: { turbo_method: :patch }, class: 'btn btn-primary', style: 'margin-bottom: 5px;' %>
     </li>
   <% end %>
 <% else %>
   <li class="nav-item">
-    <%= link_to 'Sign Up', new_user_registration_path, class: 'btn btn-primary mr-2' %>
+    <%= link_to 'Sign Up', new_user_registration_path, class: 'btn btn-primary mr-lg-2 mr-md-1 mr-sm-1', style: 'margin-bottom: 5px;' %>
   </li>
   <li class="nav-item">
-    <%= link_to 'Login', new_user_session_path, class: 'btn btn-secondary' %>
+    <%= link_to 'Login', new_user_session_path, class: 'btn btn-secondary', style: 'margin-bottom: 5px;' %>
   </li>
 <% end %>
