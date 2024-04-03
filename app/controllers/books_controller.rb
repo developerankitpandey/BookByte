@@ -68,8 +68,35 @@ class BooksController < ApplicationController
     def cart
       @cart_items = current_user.cart_items&.includes(:book)
     end
-    
-  
+
+    def checkout
+      @book = Book.find(params[:id])
+      
+      # Create the Stripe checkout session
+      @session = Stripe::Checkout::Session.create(
+        payment_method_types: ['card'],
+        line_items: [{
+          price_data: {
+            currency: 'inr',
+            product_data: {
+              name: @book.book_name,
+            },
+            unit_amount: (@book.price * 100).to_i, # Convert price to paise
+          },
+          quantity: 1
+        }],
+        mode: 'payment', # Specify the mode as 'payment'
+        success_url: book_url(@book),
+        cancel_url: books_url
+      )
+      
+      # Set flash message for testing mode
+      # flash[:notice] = "This website is in testing mode. For payment, use the following test card details:\n\nCard Number: 4242 4242 4242 4242\nExpiry Date: Any future date\nCVC: Any 3 digits"
+      
+      # Redirect to checkout page
+      # redirect_to @session.url, allow_other_host: true
+    end
+
   private 
 
   def book_params 

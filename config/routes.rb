@@ -13,6 +13,7 @@ Rails.application.routes.draw do
     member do 
       post 'add_to_cart', to: 'books#add_to_cart'
       delete 'remove_from_cart', to: 'books#remove_from_cart'
+      get 'checkout'
     end 
   end 
 
