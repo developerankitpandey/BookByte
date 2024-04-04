@@ -17,12 +17,18 @@ class BooksController < ApplicationController
 
     def search
       @books = Book.where("LOWER(book_name) LIKE ? OR LOWER(author_name) LIKE ?", "%#{params[:query].downcase}%", "%#{params[:query].downcase}%").paginate(page: params[:page], per_page: 10)
-
-      render :index
+      
+      flash.now[:notice] = "No Books found" if @books.empty?
+      render :index 
     end
 
     def show 
      @book = Book.find(params[:id])
+      # if current_user.purchased_book_ids.include?(@book.id.to_s)
+
+      # else
+      #   redirect_to checkout_book_path(@book), alert: "Please complete the payment to download the book."
+      # end
     end 
 
     def new 
@@ -71,7 +77,7 @@ class BooksController < ApplicationController
 
     def checkout
       @book = Book.find(params[:id])
-      
+
       # Create the Stripe checkout session
       @session = Stripe::Checkout::Session.create(
         payment_method_types: ['card'],
@@ -89,12 +95,7 @@ class BooksController < ApplicationController
         success_url: book_url(@book),
         cancel_url: books_url
       )
-      
-      # Set flash message for testing mode
-      # flash[:notice] = "This website is in testing mode. For payment, use the following test card details:\n\nCard Number: 4242 4242 4242 4242\nExpiry Date: Any future date\nCVC: Any 3 digits"
-      
-      # Redirect to checkout page
-      # redirect_to @session.url, allow_other_host: true
+      current_user.update(purchased_book_ids: (current_user.purchased_book_ids || []) << @book.id.to_s)
     end
 
   private 

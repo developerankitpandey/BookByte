@@ -64,3 +64,11 @@
     width: 200px;
   }
 }
+
+body {
+  background-color: #0D1B2A;
+  color: #FFFFFF; 
+  font-family: 'Arial', sans-serif; 
+  font-weight: bold;
+
+}
