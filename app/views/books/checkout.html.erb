@@ -1,0 +1,24 @@
+<script src="https://js.stripe.com/v3/"></script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function(event) {
+    var stripe = Stripe('<%= Rails.configuration.stripe[:publishable_key] %>');
+    stripe.redirectToCheckout({
+      sessionId: '<%= @session.id %>'
+    }).then(function(result) {
+      // Handle errors
+      console.error(result.error.message);
+      // Redirect to Stripe Checkout session URL if needed
+      window.location.href = "<%= @session.url %>";
+    });
+  });
+  alert("This website is in testing mode. For payment, use the following test card details:\n\nCard Number: 4242 4242 4242 4242\nExpiry Date: Any future date\nCVC: Any 3 digits");
+
+  // Refresh the page after a certain interval
+  setTimeout(function() {
+    location.reload();
+  }, 200); // Refresh every 1 minute (adjust as needed)
+
+
+</script>
+
