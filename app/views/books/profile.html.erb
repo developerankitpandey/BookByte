@@ -2,11 +2,11 @@
 
   <div class="container mt-5" style="background-color: #0D1B2A; color: #FFFFFF; font-family: 'Arial', sans-serif;">
 
-    <h1 class="text-center mb-4">All Books</h1>
+    <h1 class="text-center mb-4">Your Uploaded Books</h1>
 
     <div class="mb-4">
-      <% Book.categories.keys.each do |category|%>
-          <%= link_to category.capitalize, books_path(category: category), class: 'btn btn-primary mr-2 mb-2' %>
+      <% @books.categories.keys.each do |category|%>
+          <%= link_to category.capitalize, profile_books_path(category: category), class: 'btn btn-primary mr-2 mb-2' %>
       <%end%>
     </div>
 
@@ -51,31 +51,3 @@
   </div>
 
 </body>
-
-
-
-
-
-
-
-
-<!-- Include jQuery -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-<!-- Include Slick carousel scripts -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
-
-<script>
-  $(document).ready(function(){
-    $('.carousel').slick({
-      slidesToShow: 1,
-      slidesToScroll: 1,
-      autoplay: true,
-      autoplaySpeed: 3000, // Adjust the autoplay speed (in milliseconds)
-      speed: 1000, // Adjust the slide transition speed (in milliseconds)
-      dots: true,
-      pauseOnHover: true, // Pause autoplay on hover
-      waitForAnimate: false // Allow instant navigation between slides
-    });
-  });
-</script>

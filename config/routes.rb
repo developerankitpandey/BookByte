@@ -8,6 +8,8 @@ Rails.application.routes.draw do
     collection do
       get '/cart', to: 'books#cart', as: 'cart'
       get 'search', to: 'books#search'
+      get '/profile', to: 'books#profile'
+
     end
 
     member do 
@@ -22,7 +24,7 @@ Rails.application.routes.draw do
   resources :users do
     patch 'become_seller', on: :member
   end
-  
+
   devise_for :user,
       controllers: {
          omniauth_callbacks: 'users/omniauth_callbacks'

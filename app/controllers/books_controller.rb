@@ -16,11 +16,28 @@ class BooksController < ApplicationController
     end
 
     def search
-      @books = Book.where("LOWER(book_name) LIKE ? OR LOWER(author_name) LIKE ?", "%#{params[:query].downcase}%", "%#{params[:query].downcase}%").paginate(page: params[:page], per_page: 10)
+      if params[:category].present? && Book.categories.include?(params[:category])
+        if request.referer&.include?('profile')
+          @books = current_user.books.where(category: params[:category]).where("LOWER(book_name) LIKE ? OR LOWER(author_name) LIKE ?", "%#{params[:query].downcase}%", "%#{params[:query].downcase}%").paginate(page: params[:page], per_page: 10)
+        else
+          @books = Book.where(category: params[:category]).where("LOWER(book_name) LIKE ? OR LOWER(author_name) LIKE ?", "%#{params[:query].downcase}%", "%#{params[:query].downcase}%").paginate(page: params[:page], per_page: 10)
+        end
+      else
+        if request.referer&.include?('profile')
+          @books = current_user.books.where("LOWER(book_name) LIKE ? OR LOWER(author_name) LIKE ?", "%#{params[:query].downcase}%", "%#{params[:query].downcase}%").paginate(page: params[:page], per_page: 10)
+        else
+          @books = Book.where("LOWER(book_name) LIKE ? OR LOWER(author_name) LIKE ?", "%#{params[:query].downcase}%", "%#{params[:query].downcase}%").paginate(page: params[:page], per_page: 10)
+        end
+      end
       
       flash.now[:notice] = "No Books found" if @books.empty?
-      render :index 
+      if request.referer&.include?('profile')
+        render :profile
+      else
+        render :index
+      end
     end
+    
 
     def show 
      @book = Book.find(params[:id])
@@ -77,6 +94,8 @@ class BooksController < ApplicationController
 
     def checkout
       @book = Book.find(params[:id])
+  
+      flash.now[:notice] = "This website is in testing mode. For payment, use the following test card details:\n\nCard Number: 4242 4242 4242 4242\nExpiry Date: Any future date\nCVC: Any 3 digits"
 
       # Create the Stripe checkout session
       @session = Stripe::Checkout::Session.create(
@@ -95,7 +114,21 @@ class BooksController < ApplicationController
         success_url: book_url(@book),
         cancel_url: books_url
       )
-      current_user.update(purchased_book_ids: (current_user.purchased_book_ids || []) << @book.id.to_s)
+      if request.referrer == book_url(@book)
+        current_user.update(purchased_book_ids: (current_user.purchased_book_ids || []) << @book.id.to_s)
+      end
+    end
+   
+    def profile 
+      if params[:category].present? && Book.categories.include?(params[:category])
+        @books = current_user.books.where(category: params[:category]).order(created_at: :desc).paginate(page: params[:page], per_page: 18)
+      else
+        @books = current_user.books.order(created_at: :desc).paginate(page: params[:page], per_page: 18)
+      end
+    
+      if @books.empty?
+        flash.now[:notice] = "No books found"
+      end
     end
 
   private 

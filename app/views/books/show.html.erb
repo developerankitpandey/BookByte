@@ -1,23 +1,23 @@
-<body style="background-color: #0D1B2A; color: #FFFFFF; font-family: 'Arial', sans-serif; ">
+<body style="background-color: #121212; color: #FFFFFF; font-family: 'Arial', sans-serif; ">
   <div class="container mt-5">
     <div class="row">
-      <div class="col-md-6">
+      <div class="col-md-8">
         <% if @book.book_images.attached? %>
           <% @book.book_images.each_with_index do |image, index| %>
-            <%= image_tag image, class: 'd-block w-100 mb-4' %>
+            <%= image_tag image, class: 'd-block w-100 mb-4 rounded shadow-lg', style: 'max-height: 600px; object-fit: cover;' %>
           <% end %>
         <% else %>
-          <div class="no-image-placeholder text-center mb-4">No Image Available</div>
+          <div class="no-image-placeholder text-center mb-4 rounded shadow-lg" style="background-color: #1f1f1f; padding: 20px;">No Image Available</div>
         <% end %>
       </div>
-      <div class="col-md-6">
-        <div class="card bg-dark text-white">
-          <div class="card-body">
-            <h1 class="card-title mb-4"><%= @book.book_name %></h1>
-            <h5 class="card-subtitle mb-3 text-muted">Author: <%= @book.author_name %></h5>
-            <p class="card-text">Price: <%= number_to_currency(@book.price) %></p>
+      <div class="col-md-4 d-flex justify-content-center align-items-center">
+        <div class="card bg-dark text-white rounded shadow-lg" style="height: 600px;">
+          <div class="card-body text-center">
+            <h1 class="card-title mb-4 "><%= @book.book_name.titleize %></h1>
+            <h5 class="card-subtitle mb-3 ">Author: <%= @book.author_name.titleize %></h5>
+            <p class="card-text">Price: <%= number_to_currency(@book.price, unit: '₹').upcase %></p>
             <% if @book.pdf_file.attached? %>
-              <div class="text-center">
+              <div class="text-center mt-4">
                 <% if current_user&.purchased_book_ids&.include?(@book&.id.to_s) || current_user == @book.user %>
                   <%= link_to 'Download PDF', url_for(@book&.pdf_file), download: 'book.pdf', class: 'btn btn-primary' %>
                 <% else %>

@@ -26,17 +26,17 @@
   <body>
   <%= render 'books/shared/navbar' %>
   <br><br>
-  
-    <div class="container mt-4">
-    <% flash.each do |key, value| %>
-      <div id="alert-<%= key %>" class="alert alert-warning alert-dismissible fade show" role="alert">
-        <%= value %>
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close" onclick="dismissAlert('<%= key %>')">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-    <% end %>
-  </div>
+ <div class="container mt-4">
+  <% flash.each do |key, value| %>
+    <div id="alert-<%= key %>" class="alert <%= key == 'notice' ? 'alert-info' : 'alert-warning' %> alert-dismissible fade show" role="alert">
+      <%= value %>
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close" onclick="dismissAlert('<%= key %>')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  <% end %>
+</div>
+
 
   <script>
     function dismissAlert(key) {

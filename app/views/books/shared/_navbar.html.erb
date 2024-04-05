@@ -10,9 +10,13 @@
       <li class="nav-item">
         <%= link_to 'All Books', books_path, class: 'nav-link', style: 'color: #ffffff;' %>
         </li>
-        </li>
 
-      </li>
+       <% if current_user && current_user.seller? %> <!-- Check if current user is a seller -->
+          <li class="nav-item">
+            <%= link_to "Profile", profile_books_path, class: "nav-link" %>
+          </li>
+        <% end %>
+      
 
       <li class="nav-item">
         <%= link_to cart_books_path, class: 'nav-link', style: 'color: #ffffff;' do %>
@@ -29,7 +33,7 @@
     </ul>
     
   <%= form_tag(search_books_path, method: :get, class: "form-inline my-2 my-lg-0") do %>
-    <%= text_field_tag :query, params[:query], class: "form-control mr-sm-2", id: "search-input", placeholder: "Search Books", aria: { label: "Search" } %>
+    <%= text_field_tag :query, params[:query], class: "form-control mr-sm-2", id: "search-input", placeholder: "Search Books, Authors", aria: { label: "Search" } %>
     <%= submit_tag "Search", class: "btn btn-outline-light my-2 my-sm-0" %>
   <% end %>
 
