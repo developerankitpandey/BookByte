@@ -18,6 +18,9 @@ Rails.application.routes.draw do
       get 'checkout'
     end 
   end 
+  
+  post '/stripe-webhooks', to: 'stripe_webhooks#handle_event'
+
 
   root 'books#index'
   

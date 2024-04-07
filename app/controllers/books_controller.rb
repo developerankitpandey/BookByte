@@ -112,11 +112,15 @@ class BooksController < ApplicationController
         }],
         mode: 'payment', # Specify the mode as 'payment'
         success_url: book_url(@book),
-        cancel_url: books_url
+        cancel_url: books_url,
+        metadata: {
+          'book_id' => @book.id
+        }
       )
-      if request.referrer == book_url(@book)
-        current_user.update(purchased_book_ids: (current_user.purchased_book_ids || []) << @book.id.to_s)
-      end
+      #  session = @session.payment_intent
+      # if request.referrer == book_url(@book)
+      #   current_user.update(purchased_book_ids: (current_user.purchased_book_ids || []) << @book.id.to_s)
+      # end
     end
    
     def profile 

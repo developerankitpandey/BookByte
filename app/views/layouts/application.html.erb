@@ -1,42 +1,42 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>BookByte</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
+<head>
+  <title>BookByte</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
 
-    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-    <%= javascript_importmap_tags %>
+  <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+  <%= javascript_importmap_tags %>
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <%= stylesheet_link_tag 'https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css' %>
+  <%= stylesheet_link_tag 'https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css' %>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" />
+</head>
 
-    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
-    <%= stylesheet_link_tag 'https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css' %>
-    <%= stylesheet_link_tag 'https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css' %>
-    <%= javascript_include_tag 'https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js' %>
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-
-<!-- Bootstrap JavaScript -->
-     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
-  </head>
-
-  <body>
+<body>
   <%= render 'books/shared/navbar' %>
   <br><br>
- <div class="container mt-4">
-  <% flash.each do |key, value| %>
-    <div id="alert-<%= key %>" class="alert <%= key == 'notice' ? 'alert-info' : 'alert-warning' %> alert-dismissible fade show" role="alert">
-      <%= value %>
-      <button type="button" class="close" data-dismiss="alert" aria-label="Close" onclick="dismissAlert('<%= key %>')">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-  <% end %>
-</div>
+  <div class="container mt-4">
+    <% flash.each do |key, value| %>
+      <div id="alert-<%= key %>" class="alert <%= key == 'notice' ? 'alert-info' : 'alert-warning' %> alert-dismissible fade show" role="alert">
+        <%= value %>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close" onclick="dismissAlert('<%= key %>')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+    <% end %>
+  </div>
 
+  <%= yield %>
+
+  <%= render 'books/shared/footer'%>
+
+  <!-- Bootstrap JavaScript -->
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <%= javascript_include_tag 'https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js' %>
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 
   <script>
     function dismissAlert(key) {
@@ -44,10 +44,5 @@
       document.getElementById("alert-" + key).style.display = "none";
     }
   </script>
-    <%= yield %>
-
-    <%= render 'books/shared/footer'%>
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" />
-
-  </body>
+</body>
 </html>
