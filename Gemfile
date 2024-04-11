@@ -81,3 +81,6 @@ gem "omniauth-rails_csrf_protection"
 gem 'stripe'
 gem 'dotenv-rails', groups: [:development, :test]
 gem 'pry'
+gem 'stripe_event'
+gem 'font-awesome-sass'
+# gem "tailwindcss-rails", "~> 2.4"

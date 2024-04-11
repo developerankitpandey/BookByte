@@ -94,7 +94,6 @@ class BooksController < ApplicationController
 
     def checkout
       @book = Book.find(params[:id])
-  
       flash.now[:notice] = "This website is in testing mode. For payment, use the following test card details:\n\nCard Number: 4242 4242 4242 4242\nExpiry Date: Any future date\nCVC: Any 3 digits"
 
       # Create the Stripe checkout session
@@ -110,17 +109,16 @@ class BooksController < ApplicationController
           },
           quantity: 1
         }],
+        payment_intent_data: {    
+          metadata: {
+            book_id: @book.id,
+            current_user_id: current_user.id
+          }  
+      },
         mode: 'payment', # Specify the mode as 'payment'
         success_url: book_url(@book),
         cancel_url: books_url,
-        metadata: {
-          'book_id' => @book.id
-        }
       )
-      #  session = @session.payment_intent
-      # if request.referrer == book_url(@book)
-      #   current_user.update(purchased_book_ids: (current_user.purchased_book_ids || []) << @book.id.to_s)
-      # end
     end
    
     def profile 

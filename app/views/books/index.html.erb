@@ -1,19 +1,19 @@
-<body style="background-color: #0D1B2A; color: #FFFFFF; font-family: 'Arial', sans-serif; ">
+<body style="background-color: #91684a; color: #FFFFFF; font-family: 'Arial', sans-serif; ">
 
-  <div class="container mt-5" style="background-color: #0D1B2A; color: #FFFFFF; font-family: 'Arial', sans-serif;">
+  <div class="container mt-5" style=" color: #FFFFFF; font-family: 'Arial', sans-serif;">
 
     <h1 class="text-center mb-4">All Books</h1>
 
     <div class="mb-4">
       <% Book.categories.keys.each do |category|%>
-          <%= link_to category.capitalize, books_path(category: category), class: 'btn btn-primary mr-2 mb-2' %>
+    <%= link_to category.capitalize, books_path(category: category), class: 'btn btn mr-2 mb-2', style: "background-color: #201d3a; color: white; font-weight: bold;" %>
       <%end%>
     </div>
 
     <div class="row">
       <% @books.each do |book| %>
         <div class="col-lg-4 col-md-6 mb-4">
-          <div class="card" style="background-color: #212121; border: none; color: #FFFFFF; height: 600px;">
+          <div class="card" style="background-color: #7A9D96; border: none; color: #FFFFFF; height: 600px;">
             <div class="card-body" style="height: 500px;"> <!-- Adjust the height as needed -->
               <!-- Book image -->
               <div class="book-image-container" style="height: 400px;">
@@ -31,14 +31,17 @@
               </div>
 
               <!-- Book details -->
-              <h6 class="card-title mt-2" style="font-size: 1rem; font-weight: bold; margin-bottom: 10px;"><%= book.book_name.titleize %></h6>
-              <p class="card-text" style="font-size: 1rem; line-height: 1.5; margin-bottom: 10px;">Author: <%= book.author_name.titleize %></p>
-              <p class="card-text" style="font-size: 1rem; line-height: 1.5; margin-bottom: 10px;">Price: <%= number_to_currency(book.price, unit: '₹') %></p>
+              <h6 class="card-title mt-2" style="font-size: 1rem; font-weight: bold; margin-bottom: 10px; "><%= book.book_name.titleize %></h6>
+              <p class="card-text" style="font-size: 1rem; font-weight: bold; line-height: 1.5; margin-bottom: 10px;">Author: <%= book.author_name.titleize %></p>
+              <p class="card-text" style="font-size: 1rem; font-weight: bold; line-height: 1.5; margin-bottom: 10px;">Price: <%= number_to_currency(book.price, unit: '₹') %></p>
 
               <!-- Buttons -->
               <div class="d-flex justify-content-between">
+                <% if current_user&.cart_items&.any? { |item| item.book_id == book.id } %>
+                <%= link_to "Added to Cart",'#', class: 'btn btn-success disabled', style: 'pointer-events: none;' %>
+                <%else%>
               <%= button_to "Add to Cart", add_to_cart_book_path(book), method: :post, class: 'btn btn-primary' %>
-
+              <%end%>
                 <%= link_to 'View Details', book_path(book), class: 'btn btn-primary', style: 'font-size: 1rem;' %>
               </div>
             </div>
