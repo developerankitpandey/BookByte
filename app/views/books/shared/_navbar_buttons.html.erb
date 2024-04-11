@@ -12,7 +12,7 @@
   </li>&nbsp;
   <% if current_user.buyer? %>
     <li class="nav-item">
-      <%= link_to 'Become Seller', become_seller_user_path(current_user), data: { turbo_method: :patch }, class: 'btn btn-primary', style: 'margin-bottom: 5px;' %>
+      <%= link_to 'Join as Contributor', become_seller_user_path(current_user), data: { turbo_method: :patch }, class: 'btn btn-primary', style: 'margin-bottom: 5px;' %>
     </li>
   <% end %>
 <% else %>
