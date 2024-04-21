@@ -14,7 +14,7 @@ class User < ApplicationRecord
     after_create :create_cart
     
     validates :email, presence: true, uniqueness: { case_sensitive: false }, format: { with: URI::MailTo::EMAIL_REGEXP }
-    validate :password_complexity
+    # validate :password_complexity
 
     def set_default_role 
       self.role = :buyer
@@ -35,9 +35,9 @@ class User < ApplicationRecord
      Cart.create(user: self)
     end 
 
-    def password_complexity
-      return if password.blank? || password =~ /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,70}$/
+    # def password_complexity
+    #   return if password.blank? || password =~ /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,70}$/
   
-      errors.add :password, 'Complexity requirement not met. Length should be 8-70 characters and include: 1 uppercase, 1 lowercase, 1 digit and 1 special character'
-    end
+    #   errors.add :password, 'Complexity requirement not met. Length should be 8-70 characters and include: 1 uppercase, 1 lowercase, 1 digit and 1 special character'
+    # end
 end

@@ -9,6 +9,12 @@
           <%= link_to category.capitalize, profile_books_path(category: category), class: 'btn btn-primary mr-2 mb-2' %>
       <%end%>
     </div>
+    
+    <% if @books.empty? %>
+      <div class="text-center mt-5" >
+      <h1 class="font-weight-bold"> You didn't contribute yet </h1>
+      </div>
+    <%end%>
 
     <div class="row">
       <% @books.each do |book| %>

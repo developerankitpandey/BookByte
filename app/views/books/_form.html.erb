@@ -1,3 +1,10 @@
+<style>
+ body {
+  background-color: #0D1B2A;
+  color: white;
+ }
+</style>
+
 <%= form_with(model: book, local: true, multipart: true) do |form| %>
   <% if book.errors.any? %>
     <div class="alert alert-danger">
