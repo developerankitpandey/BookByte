@@ -5,9 +5,9 @@ class BooksController < ApplicationController
     def index 
       # @books = Book.paginate(page: params[:page], per_page: 15)
       if params[:category].present? && Book.categories.include?(params[:category])
-        @books = Book.where(category: params[:category]).order(created_at: :desc).paginate(page: params[:page], per_page: 18)
+        @books = Book.where(category: params[:category]).order(created_at: :desc).paginate(page: params[:page], per_page: 12)
       else
-        @books = Book.order(created_at: :desc).paginate(page: params[:page], per_page: 18)
+        @books = Book.order(created_at: :desc).paginate(page: params[:page], per_page: 12)
       end
     
       if @books.empty?
@@ -89,7 +89,7 @@ class BooksController < ApplicationController
     end
 
     def cart
-      @cart_items = current_user.cart_items&.includes(:book)
+      @cart_items = current_user.cart_items&.includes(:book).paginate(page: params[:page], per_page: 12)
     end
 
     def checkout
